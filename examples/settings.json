@@ -1,0 +1,59 @@
+{
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Edit(/refs/approved/**)",
+      "Write(/refs/approved/**)",
+      "Edit(/refs/approved.sha256)",
+      "Write(/refs/approved.sha256)",
+      "Edit(/docs/story_bible/**)",
+      "Write(/docs/story_bible/**)",
+      "mcp__blender__generate_3d"
+    ],
+    "ask": [
+      "mcp__blender__import_asset"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell|mcp__blender.*__execute_blender_code",
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/guard.py\"" }
+        ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/timer.py\" --pre" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/timer.py\" --post" },
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/relay.py\" --post" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/night.py\"" },
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/continuous.py\"" },
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/language.py\"" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "echo 'Firm reminder: answer in French, to her and to the other sessions, even if what you read is in English.'" },
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/hooks/night.py\" --wake" }
+        ]
+      }
+    ]
+  }
+}
