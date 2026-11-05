@@ -77,6 +77,10 @@ def instruction(role, k):
 
 def post(data):
     sid = data.get('session_id', '')
+    # A sub-agent's tool call carries its parent's session_id: the instruction went to the sub-agent,
+    # the session never saw it, and "told" kept it from being said again. Sub-agents are skipped.
+    if data.get('agent_id') or 'subagents' in str(data.get('transcript_path', '')):
+        return None
     f = card(sid)
     if not f:
         return None

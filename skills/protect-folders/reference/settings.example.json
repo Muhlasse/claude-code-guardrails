@@ -1,0 +1,26 @@
+{
+  "env": {
+    "GUARDRAILS_PROTECTED_PATHS": "data/raw,secrets",
+    "GUARDRAILS_PROTECTED_NAMES": "",
+    "GUARDRAILS_HUMAN_ONLY": "",
+    "GUARDRAILS_RESTORE": ""
+  },
+  "permissions": {
+    "deny": [
+      "Edit(/data/raw/**)",
+      "Write(/data/raw/**)",
+      "Edit(/secrets/**)",
+      "Write(/secrets/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\"" }
+        ]
+      }
+    ]
+  }
+}

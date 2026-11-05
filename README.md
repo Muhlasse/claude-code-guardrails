@@ -4,7 +4,7 @@
 
 I make a first-person horror game demo in Godot, alone. Several Claude Code sessions work on it at the same time, each with a role (`game`, `code`, `workshop`, `sound`, `video`). Some keep working at night.
 
-Every rule that matters is a **Claude Code hook**: plain Python, covered by tests (176 checks, 0 failures).
+Every rule that matters is a **Claude Code hook**: plain Python, covered by tests (178 checks, 0 failures).
 
 ## The six hooks at a glance
 
@@ -71,7 +71,7 @@ Test: [`test_timer.py`](hooks/tests/test_timer.py), 28 checks.
 - `--ready` refuses a missing note, one older than 30 minutes, or shorter than 200 bytes.
 - The dashboard then reopens a fresh session on that note. Never at night.
 
-Test: [`test_relay.py`](hooks/tests/test_relay.py), 15 checks.
+Test: [`test_relay.py`](hooks/tests/test_relay.py), 17 checks.
 </details>
 
 <details>
@@ -109,6 +109,7 @@ Test: [`test_language.py`](hooks/tests/test_language.py), 10 checks.
 
 ## Also in this repo
 
+- [`skills/protect-folders`](skills/protect-folders/SKILL.md): the guard alone, as a standalone skill: make chosen folders read-only for agents.
 - [`skills/start`](skills/start/SKILL.md), [`skills/end`](skills/end/SKILL.md): the session ritual (state summary, journal, one commit script).
 - [`skills/improve`](skills/improve/SKILL.md): after a mixed verdict, a scoring grid first, then 3 candidates; the human decides.
 - [`agents/reviewer.md`](agents/reviewer.md): predicts whether an attempt will be refused, from the human's past verdicts.
